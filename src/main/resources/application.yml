@@ -1,0 +1,16 @@
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: password
+  application:
+    name: baking-recipes
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.neo4j: DEBUG
+    org.neo4j.ogm: DEBUG

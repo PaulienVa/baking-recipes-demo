@@ -1,0 +1,14 @@
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: test-password
+  application:
+    name: baking-recipes-test
+
+logging:
+  level:
+    org.springframework.data.neo4j: INFO
+    org.neo4j.ogm: INFO
+    org.testcontainers: INFO
