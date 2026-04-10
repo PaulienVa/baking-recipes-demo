@@ -1,12 +1,12 @@
-package com.openvalue.bakingrecipes.controller
+package com.openvalue.bakingrecipes.api
 
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
 import com.openvalue.bakingrecipes.service.RecipeService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -57,7 +57,7 @@ class RecipeController(private val recipeService: RecipeService) {
     }
 
     @PostMapping
-    fun createRecipe(@Valid @RequestBody recipe: Recipe): ResponseEntity<Recipe> {
+    fun createRecipe(@Valid @RequestBody recipe: CreateRecipeRequest): ResponseEntity<Recipe> {
         val createdRecipe = recipeService.createRecipe(recipe)
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipe)
     }

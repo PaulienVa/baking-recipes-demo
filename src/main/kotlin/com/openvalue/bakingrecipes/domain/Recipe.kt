@@ -4,6 +4,7 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue
 import org.springframework.data.neo4j.core.schema.Id
 import org.springframework.data.neo4j.core.schema.Node
 import org.springframework.data.neo4j.core.schema.Relationship
+import kotlin.time.Duration
 
 @Node
 data class Recipe(
@@ -11,17 +12,21 @@ data class Recipe(
     val id: Long? = null,
     val name: String,
     val description: String,
-    val preparationTime: Int,
-    val cookingTime: Int,
+    val preparationTime: Duration,
+    val waitingTime: Duration,
+    val cookingTime: Duration,
     val servings: Int,
     val difficulty: Difficulty,
     val category: RecipeCategory,
 
-    @Relationship(type = "CONTAINS", direction = Relationship.Direction.OUTGOING)
-    val ingredients: Set<Ingredient> = emptySet(),
+    @Relationship(type = "REQUIRES", direction = Relationship.Direction.OUTGOING)
+    val requiredIngredients: Set<QuantifiedIngredient> = emptySet(),
 
-    @Relationship(type = "HAS_STEP", direction = Relationship.Direction.OUTGOING)
-    val steps: List<Step> = emptyList()
+    @Relationship(type = "COULD_ALSO_CONTAIN", direction = Relationship.Direction.OUTGOING)
+    val optionalIngredients: Set<QuantifiedIngredient> = emptySet(),
+
+    @Relationship(type = "IS_PREPARED_BY", direction = Relationship.Direction.OUTGOING)
+    val steps: List<StepInRecipe> = emptyList()
 )
 
 enum class Difficulty {
@@ -29,5 +34,5 @@ enum class Difficulty {
 }
 
 enum class RecipeCategory {
-    CAKE, MADELEINES, COOKIES
+    BAKING, MAIN_COURSE, DESSERT, LUNCH
 }

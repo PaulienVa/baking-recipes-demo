@@ -1,14 +1,23 @@
 package com.openvalue.bakingrecipes.domain
 
-import org.springframework.data.neo4j.core.schema.GeneratedValue
-import org.springframework.data.neo4j.core.schema.Id
-import org.springframework.data.neo4j.core.schema.Node
+import org.springframework.data.neo4j.core.schema.*
+import java.time.Duration
 
 @Node
 data class Step(
     @Id @GeneratedValue
     val id: Long? = null,
-    val stepNumber: Int,
     val instruction: String,
-    val estimatedTime: Int? = null
+    val estimatedTime: Duration?,
+    val waitingTime: Duration?,
+)
+
+@RelationshipProperties
+data class StepInRecipe(
+    @RelationshipId
+    val id: Long,
+    val order: Int,
+
+    @TargetNode
+    val step: Step,
 )

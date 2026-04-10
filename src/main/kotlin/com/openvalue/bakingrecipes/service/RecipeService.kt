@@ -1,9 +1,12 @@
 package com.openvalue.bakingrecipes.service
 
+import com.openvalue.bakingrecipes.api.CreateRecipeRequest
+import com.openvalue.bakingrecipes.domain.Ingredient
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
 import com.openvalue.bakingrecipes.repository.RecipeRepository
 import org.springframework.stereotype.Service
+import kotlin.time.Duration
 
 @Service
 class RecipeService(private val recipeRepository: RecipeRepository) {
@@ -25,7 +28,20 @@ class RecipeService(private val recipeRepository: RecipeRepository) {
         if (requireAll) recipeRepository.findRecipesWithAllIngredients(ingredients)
         else recipeRepository.findRecipesWithAnyIngredient(ingredients)
 
-    fun createRecipe(recipe: Recipe): Recipe = recipeRepository.save(recipe)
+    fun createRecipe(request: CreateRecipeRequest): Recipe {
+        with(request) {
+            // todo validation method in request object
+            if (name.isBlank() || description.isBlank() || preparationTime <= Duration.ZERO || cookingTime <= Duration.ZERO || servings <= 0) {
+                throw IllegalArgumentException("Invalid recipe data")
+            }
+            if (ingredients.isNotEmpty()) {
+                ingredients.map {
+                    Ingredient(null, it.name)
+                }
+            }
+            return Recipe(null, name, description, preparationTime, waitingTime, cookingTime, servings, difficulty, category)
+        }
+    }
 
     fun updateRecipe(id: Long, updatedRecipe: Recipe): Recipe? {
         return if (recipeRepository.existsById(id)) {
