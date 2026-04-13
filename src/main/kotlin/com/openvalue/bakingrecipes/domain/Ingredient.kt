@@ -2,8 +2,6 @@ package com.openvalue.bakingrecipes.domain
 
 import org.springframework.data.neo4j.core.schema.*
 
-// Comment; this could become a gode node!
-
 @Node
 data class Ingredient(
     @Id @GeneratedValue

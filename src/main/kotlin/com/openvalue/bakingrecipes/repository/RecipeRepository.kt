@@ -10,12 +10,9 @@ import org.springframework.stereotype.Repository
 @Repository
 interface RecipeRepository : Neo4jRepository<Recipe, Long> {
 
-    @Query("MATCH (r:Recipe) WHERE r.category = \"$\"category RETURN r")
-    fun findByCategory(@Param("category") category: RecipeCategory): List<Recipe>
-
     @Query("""
         MATCH (r:Recipe)
-        WHERE r.name CONTAINS {{"$"}}name OR r.description CONTAINS {{"$"}}name
+        WHERE r.name CONTAINS ${'$'}name OR r.description CONTAINS {{"$"}}name
         RETURN r
     """)
     fun findByNameContainingOrDescriptionContaining(@Param("name") name: String): List<Recipe>
@@ -28,20 +25,12 @@ interface RecipeRepository : Neo4jRepository<Recipe, Long> {
     fun findByTotalTimeLimit(@Param("maxTime") maxTime: Int): List<Recipe>
 
     @Query("""
-        MATCH (r:Recipe)-[:CONTAINS]->(i:Ingredient)
-        WHERE i.name IN ${'$'}ingredients
-        WITH r, COUNT(DISTINCT i) as ingredientCount
-        WHERE ingredientCount = SIZE(${'$'}ingredients)
+        MATCH (i:Ingredient)<-[:REQUIRES]-(r:Recipe)
+        WHERE i.name = ${'$'}ingredientName
         RETURN r
     """)
-    fun findRecipesWithAllIngredients(@Param("ingredients") ingredients: List<String>): List<Recipe>
+    fun findRecipesUsingIngredient(@Param("ingredientName") ingredientName: String): List<Recipe>
 
-    @Query("""
-        MATCH (r:Recipe)-[:CONTAINS]->(i:Ingredient)
-        WHERE i.name IN ${'$'}ingredients
-        RETURN DISTINCT r
-    """)
-    fun findRecipesWithAnyIngredient(@Param("ingredients") ingredients: List<String>): List<Recipe>
 
     @Query("""
         MATCH (r:Recipe)
