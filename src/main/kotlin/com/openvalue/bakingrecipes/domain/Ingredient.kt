@@ -14,7 +14,7 @@ data class Ingredient(
 @RelationshipProperties
 data class QuantifiedIngredient(
     @RelationshipId
-    val id: Long,
+    val id: Long? = null,
     val quantity: Double,
     val unit: String?,
 

@@ -14,17 +14,27 @@ data class CreateRecipeRequest(
     val difficulty: Difficulty,
     val category: RecipeCategory,
     val ingredients: List<IngredientOfRecipe>,
-    val steps: List<StepOfRecipe>
-)
+    val steps: List<StepOfRecipe>,
+    val author: AuthorOfRecipe
+) {
+    fun isInvalid(): Boolean = name.isBlank() || description.isBlank() || preparationTime <= Duration.ZERO || cookingTime <= Duration.ZERO || servings <= 0
+}
 
 data class IngredientOfRecipe(
     val name: String,
     val quantity: Double,
-    val unit: String
+    val unit: String,
+    val isOptional: Boolean = false
 )
 
 data class StepOfRecipe(
     val number: Int,
     val instruction: String,
-    val estimatedTime: Int? = null
+    val estimatedTime: Duration? = null,
+    val waitingTime: Duration? = null
+)
+
+data class AuthorOfRecipe(
+    val name: String,
+    val website: String? = null
 )

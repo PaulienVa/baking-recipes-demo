@@ -1,7 +1,7 @@
 package com.openvalue.bakingrecipes.domain
 
 import org.springframework.data.neo4j.core.schema.*
-import java.time.Duration
+import kotlin.time.Duration
 
 @Node
 data class Step(
@@ -15,7 +15,7 @@ data class Step(
 @RelationshipProperties
 data class StepInRecipe(
     @RelationshipId
-    val id: Long,
+    val id: Long? = null,
     val order: Int,
 
     @TargetNode

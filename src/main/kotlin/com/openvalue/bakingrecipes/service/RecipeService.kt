@@ -1,12 +1,16 @@
 package com.openvalue.bakingrecipes.service
 
 import com.openvalue.bakingrecipes.api.CreateRecipeRequest
+import com.openvalue.bakingrecipes.api.IngredientOfRecipe
+import com.openvalue.bakingrecipes.api.StepOfRecipe
 import com.openvalue.bakingrecipes.domain.Ingredient
+import com.openvalue.bakingrecipes.domain.QuantifiedIngredient
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
+import com.openvalue.bakingrecipes.domain.Step
+import com.openvalue.bakingrecipes.domain.StepInRecipe
 import com.openvalue.bakingrecipes.repository.RecipeRepository
 import org.springframework.stereotype.Service
-import kotlin.time.Duration
 
 @Service
 class RecipeService(private val recipeRepository: RecipeRepository) {
@@ -30,17 +34,41 @@ class RecipeService(private val recipeRepository: RecipeRepository) {
 
     fun createRecipe(request: CreateRecipeRequest): Recipe {
         with(request) {
-            // todo validation method in request object
-            if (name.isBlank() || description.isBlank() || preparationTime <= Duration.ZERO || cookingTime <= Duration.ZERO || servings <= 0) {
-                throw IllegalArgumentException("Invalid recipe data")
+            if (isInvalid()) {
+                throw IllegalArgumentException("Invalid recipe data, one of the following fields is missing: name, description, preparationTime, cookingTime, servings")
             }
-            if (ingredients.isNotEmpty()) {
-                ingredients.map {
-                    Ingredient(null, it.name)
-                }
-            }
-            return Recipe(null, name, description, preparationTime, waitingTime, cookingTime, servings, difficulty, category)
+            val requiredIngredients = toRequiredIngredients(ingredients)
+            val optionalIngredients = toOptionalIngredients(ingredients)
+            val recipeSteps = toSteps(steps)
+            val recipe = Recipe(name = name, description = description,
+                preparationTime = preparationTime, waitingTime = waitingTime, cookingTime = cookingTime,
+                servings = servings, difficulty = difficulty, category = category,
+                requiredIngredients = requiredIngredients,
+                optionalIngredients = optionalIngredients,
+                steps = recipeSteps
+            )
+            return recipeRepository.save(recipe)
         }
+    }
+
+    private fun toSteps(steps: List<StepOfRecipe>) = steps.map {
+        StepInRecipe(order = it.number, step = Step(instruction = it.instruction, estimatedTime = it.estimatedTime, waitingTime = it.waitingTime))
+    }
+
+    private fun toRequiredIngredients(ingredients: List<IngredientOfRecipe>) = if (ingredients.isNotEmpty()) {
+        ingredients
+            .filterNot { it.isOptional }
+            .map { QuantifiedIngredient(null, it.quantity, it.unit, Ingredient(null, it.name)) }
+    } else {
+        emptyList()
+    }
+
+    private fun toOptionalIngredients(ingredients: List<IngredientOfRecipe>) = if (ingredients.isNotEmpty()) {
+        ingredients
+            .filter { it.isOptional }
+            .map { QuantifiedIngredient(null, it.quantity, it.unit, Ingredient(null, it.name)) }
+    } else {
+        emptyList()
     }
 
     fun updateRecipe(id: Long, updatedRecipe: Recipe): Recipe? {

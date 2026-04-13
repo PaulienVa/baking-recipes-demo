@@ -20,10 +20,10 @@ data class Recipe(
     val category: RecipeCategory,
 
     @Relationship(type = "REQUIRES", direction = Relationship.Direction.OUTGOING)
-    val requiredIngredients: Set<QuantifiedIngredient> = emptySet(),
+    val requiredIngredients: List<QuantifiedIngredient> = emptyList(),
 
     @Relationship(type = "COULD_ALSO_CONTAIN", direction = Relationship.Direction.OUTGOING)
-    val optionalIngredients: Set<QuantifiedIngredient> = emptySet(),
+    val optionalIngredients: List<QuantifiedIngredient> = emptyList(),
 
     @Relationship(type = "IS_PREPARED_BY", direction = Relationship.Direction.OUTGOING)
     val steps: List<StepInRecipe> = emptyList()

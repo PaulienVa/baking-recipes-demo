@@ -4,6 +4,9 @@ Different type of solutions:
 Recipe with all its properties
 Or use some nodes with properties (time related f.i.)
 
+Show Constraints
+Show Indexes
+
 logging config:
 `logging.level.org.springframework.data.neo4j=DEBUG`
 

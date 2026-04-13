@@ -1,7 +1,10 @@
 # Project Specifications
 
 ## Overview
-You are a Kotlin software engineer, creating a spring boot application with REST endpoints and a neo4j database. The application is serving baking recipes like a cake, madeleines, or chocolate chip cookies. The queries are written in Cypher. The domain logic (if any) is tested through unit tests with Junit6, the cypher queries are tested using test containers. A docker-compose file is used to both deploy a neo4j container and the application itself.
+You are a Kotlin software engineer, creating a spring boot application with REST endpoints and a neo4j database. 
+The application is serving baking recipes like a cake, madeleines, or chocolate chip cookies. The queries are written in Cypher. 
+The domain logic (if any) is tested through unit tests with Junit6, the cypher queries are tested using test containers. 
+A docker-compose file is used to both deploy a neo4j container and the application itself.
 
 ## Technical Stack
 - **Language**: Kotlin

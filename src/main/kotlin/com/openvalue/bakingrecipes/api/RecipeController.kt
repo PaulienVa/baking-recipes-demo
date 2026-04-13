@@ -2,6 +2,7 @@ package com.openvalue.bakingrecipes.api
 
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
+import com.openvalue.bakingrecipes.service.AuthorService
 import com.openvalue.bakingrecipes.service.RecipeService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/recipes")
-@CrossOrigin(origins = ["*"])
-class RecipeController(private val recipeService: RecipeService) {
+class RecipeController(private val recipeService: RecipeService, private val authorService: AuthorService) {
 
     @GetMapping
     fun getAllRecipes(): ResponseEntity<List<Recipe>> {
@@ -59,6 +59,7 @@ class RecipeController(private val recipeService: RecipeService) {
     @PostMapping
     fun createRecipe(@Valid @RequestBody recipe: CreateRecipeRequest): ResponseEntity<Recipe> {
         val createdRecipe = recipeService.createRecipe(recipe)
+        val author = authorService.saveAuthor(recipe.author)
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipe)
     }
 

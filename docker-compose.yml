@@ -29,7 +29,7 @@ services:
     environment:
       - SPRING_NEO4J_URI=bolt://neo4j:7687
       - SPRING_NEO4J_AUTHENTICATION_USERNAME=neo4j
-      - SPRING_NEO4J_AUTHENTICATION_PASSWORD=password
+      - SPRING_NEO4J_AUTHENTICATION_PASSWORD=neo4jneo4j
     depends_on:
       - neo4j
     networks:
