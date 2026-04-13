@@ -1,6 +1,7 @@
 package com.openvalue.bakingrecipes.repository
 
 import com.openvalue.bakingrecipes.domain.Ingredient
+import com.openvalue.bakingrecipes.domain.Recipe
 import org.springframework.data.neo4j.repository.Neo4jRepository
 import org.springframework.data.neo4j.repository.query.Query
 import org.springframework.data.repository.query.Param
@@ -15,10 +16,10 @@ interface IngredientRepository : Neo4jRepository<Ingredient, Long> {
 
     @Query("""
         MATCH (i:Ingredient)<-[:CONTAINS]-(r:Recipe)
-        WHERE id(i) = ${'$'}ingredientId
+        WHERE i.name = ${'$'}ingredientName
         RETURN r
     """)
-    fun findRecipesUsingIngredient(@Param("ingredientId") ingredientId: Long): List<Any>
+    fun findRecipesUsingIngredient(@Param("ingredientName") ingredientName: String): List<Recipe>
 
     @Query("""
         MATCH (i:Ingredient)<-[:CONTAINS]-(r:Recipe)
@@ -26,5 +27,5 @@ interface IngredientRepository : Neo4jRepository<Ingredient, Long> {
         ORDER BY recipeCount DESC
         LIMIT 10
     """)
-    fun findMostUsedIngredients(): List<Map<String, Any>>
+    fun findMostUsedIngredients(): List<Map<String, Int>>
 }

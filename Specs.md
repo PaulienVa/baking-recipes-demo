@@ -15,12 +15,6 @@ A docker-compose file is used to both deploy a neo4j container and the applicati
 - **Testing**: JUnit 6 for unit tests, TestContainers for integration tests
 - **Deployment**: Docker Compose
 
-## Domain
-Baking recipes including:
-- Cake
-- Madeleines
-- Chocolate chip cookies
-
 ## Architecture Requirements
 - REST endpoints for recipe management
 - Neo4j database for storing recipe data and relationships
@@ -28,3 +22,13 @@ Baking recipes including:
 - Unit tests for domain logic
 - Integration tests for database queries using TestContainers
 - Docker Compose for containerized deployment
+
+## API Documentation (OpenAPI / Swagger UI)
+The REST API is documented using **OpenAPI** and served with **Swagger UI** (springdoc):
+- Swagger UI: `http://localhost:8080/swagger-ui`
+- OpenAPI JSON: `http://localhost:8080/api-docs`
+
+- The documentation includes the endpoints from:
+- `AuthorController`
+- `RecipeController`
+- `IngredientController`

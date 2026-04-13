@@ -1,5 +1,6 @@
 package com.openvalue.bakingrecipes.api
 
+import com.openvalue.bakingrecipes.api.domain.CreateRecipeRequest
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
 import com.openvalue.bakingrecipes.service.AuthorService

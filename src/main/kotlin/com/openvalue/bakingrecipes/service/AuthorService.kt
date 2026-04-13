@@ -1,6 +1,6 @@
 package com.openvalue.bakingrecipes.service
 
-import com.openvalue.bakingrecipes.api.AuthorOfRecipe
+import com.openvalue.bakingrecipes.api.domain.AuthorOfRecipe
 import com.openvalue.bakingrecipes.domain.Author
 import com.openvalue.bakingrecipes.repository.AuthorRepository
 import org.springframework.stereotype.Service

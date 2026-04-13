@@ -15,6 +15,7 @@ data class Author(
 
 @RelationshipProperties
 data class HasWritten(
+
     @RelationshipId
     val id: Long,
     val publishedIn: String,

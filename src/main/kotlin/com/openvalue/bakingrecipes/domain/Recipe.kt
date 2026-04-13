@@ -13,7 +13,7 @@ data class Recipe(
     val name: String,
     val description: String,
     val preparationTime: Duration,
-    val waitingTime: Duration,
+    val waitingTime: Duration?,
     val cookingTime: Duration,
     val servings: Int,
     val difficulty: Difficulty,

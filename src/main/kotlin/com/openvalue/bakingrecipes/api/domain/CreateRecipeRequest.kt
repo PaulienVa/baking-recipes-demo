@@ -1,4 +1,4 @@
-package com.openvalue.bakingrecipes.api
+package com.openvalue.bakingrecipes.api.domain
 
 import com.openvalue.bakingrecipes.domain.Difficulty
 import com.openvalue.bakingrecipes.domain.RecipeCategory

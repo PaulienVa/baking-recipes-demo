@@ -1,8 +1,8 @@
 package com.openvalue.bakingrecipes.service
 
-import com.openvalue.bakingrecipes.api.CreateRecipeRequest
-import com.openvalue.bakingrecipes.api.IngredientOfRecipe
-import com.openvalue.bakingrecipes.api.StepOfRecipe
+import com.openvalue.bakingrecipes.api.domain.CreateRecipeRequest
+import com.openvalue.bakingrecipes.api.domain.IngredientOfRecipe
+import com.openvalue.bakingrecipes.api.domain.StepOfRecipe
 import com.openvalue.bakingrecipes.domain.Ingredient
 import com.openvalue.bakingrecipes.domain.QuantifiedIngredient
 import com.openvalue.bakingrecipes.domain.Recipe

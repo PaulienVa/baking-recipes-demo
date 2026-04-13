@@ -22,16 +22,16 @@ interface RecipeRepository : Neo4jRepository<Recipe, Long> {
 
     @Query("""
         MATCH (r:Recipe)
-        WHERE r.preparationTime + r.cookingTime <= {{"$"}}maxTime
+        WHERE r.preparationTime + r.cookingTime <= ${'$'}maxTime
         RETURN r ORDER BY r.preparationTime + r.cookingTime ASC
     """)
     fun findByTotalTimeLimit(@Param("maxTime") maxTime: Int): List<Recipe>
 
     @Query("""
         MATCH (r:Recipe)-[:CONTAINS]->(i:Ingredient)
-        WHERE i.name IN {{"$"}}ingredients
+        WHERE i.name IN ${'$'}ingredients
         WITH r, COUNT(DISTINCT i) as ingredientCount
-        WHERE ingredientCount = SIZE({{"$"}}ingredients)
+        WHERE ingredientCount = SIZE(${'$'}ingredients)
         RETURN r
     """)
     fun findRecipesWithAllIngredients(@Param("ingredients") ingredients: List<String>): List<Recipe>

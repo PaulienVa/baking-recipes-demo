@@ -26,7 +26,7 @@ CREATE (r:Recipe {
   description:     "Classic laminated puff pastry: keep dough and butter cold; roll, fold and chill to build layers.",
   preparationTime: duration({hours: 2}),
   waitingTime:     duration({hours: 24}),
-  cookingTime:     0,
+  cookingTime:     duration({hours: 0}),
   servings:        1, // “1 batch”
   difficulty:      "HARD",
   category:        "BAKING"
