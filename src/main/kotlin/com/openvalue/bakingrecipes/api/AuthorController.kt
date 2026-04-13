@@ -25,4 +25,10 @@ class AuthorController(
             authorService.findByNameContainingIgnoreCase(name)
         return found
     }
+
+    @GetMapping("most-complex")
+    fun retrieveAuthorWithMostComplexRecipe(): AuthorOfRecipe {
+        val found = authorService.findMostAuthorOfMostComplexRecipe()
+        return found
+    }
 }

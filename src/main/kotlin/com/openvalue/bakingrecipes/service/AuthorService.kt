@@ -23,9 +23,12 @@ class AuthorService(private val authorRepository: AuthorRepository) {
         return authorRepository.findAll().map { toAuthorOfRecipe(it)  }
     }
 
-    fun toAuthorOfRecipe(author: Author): AuthorOfRecipe {
+    fun findMostAuthorOfMostComplexRecipe() = toAuthorOfRecipe(authorRepository.findMostComplexRecipe())
+
+    private fun toAuthorOfRecipe(author: Author): AuthorOfRecipe {
         return with(author) {
             AuthorOfRecipe(name = name, website = website)
         }
     }
+
 }

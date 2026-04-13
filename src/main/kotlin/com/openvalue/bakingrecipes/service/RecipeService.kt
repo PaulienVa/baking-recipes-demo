@@ -7,7 +7,6 @@ import com.openvalue.bakingrecipes.api.domain.StepOfRecipe
 import com.openvalue.bakingrecipes.domain.Ingredient
 import com.openvalue.bakingrecipes.domain.QuantifiedIngredient
 import com.openvalue.bakingrecipes.domain.Recipe
-import com.openvalue.bakingrecipes.domain.RecipeCategory
 import com.openvalue.bakingrecipes.domain.Step
 import com.openvalue.bakingrecipes.domain.StepInRecipe
 import com.openvalue.bakingrecipes.repository.AuthorRepository
@@ -22,10 +21,6 @@ class RecipeService(private val recipeRepository: RecipeRepository, private val 
     fun searchRecipes(query: String): List<SingleRecipe> =
         recipeRepository.findByNameContainingOrDescriptionContaining(query).map { toSingleRecipe(it) }
 
-    fun getRecipesByTimeLimit(maxTime: Int): List<SingleRecipe> =
-        recipeRepository.findByTotalTimeLimit(maxTime).map { toSingleRecipe(it) }
-
-
     fun createRecipe(request: CreateRecipeRequest): SingleRecipe {
         with(request) {
             if (isInvalid()) {
@@ -35,8 +30,8 @@ class RecipeService(private val recipeRepository: RecipeRepository, private val 
             val optionalIngredients = toOptionalIngredients(ingredients)
             val recipeSteps = toSteps(steps)
             val recipe = Recipe(name = name, description = description,
-                preparationTime = preparationTime, waitingTime = waitingTime, cookingTime = cookingTime,
-                servings = servings, difficulty = difficulty, category = category,
+                preparationTime = preparationTime, cookingTime = cookingTime,
+                servings = servings,
                 requiredIngredients = requiredIngredients,
                 optionalIngredients = optionalIngredients,
                 steps = recipeSteps

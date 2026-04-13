@@ -1,8 +1,6 @@
 package com.openvalue.bakingrecipes.api.domain
 
-import com.openvalue.bakingrecipes.domain.Difficulty
-import com.openvalue.bakingrecipes.domain.RecipeCategory
-import kotlin.time.Duration
+import java.time.Duration
 
 data class CreateRecipeRequest(
     val name: String,
@@ -11,8 +9,6 @@ data class CreateRecipeRequest(
     val waitingTime: Duration,
     val cookingTime: Duration,
     val servings: Int,
-    val difficulty: Difficulty,
-    val category: RecipeCategory,
     val ingredients: List<IngredientOfRecipe>,
     val steps: List<StepOfRecipe>,
     val author: AuthorOfRecipe

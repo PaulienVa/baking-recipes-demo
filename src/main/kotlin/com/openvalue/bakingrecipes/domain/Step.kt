@@ -1,7 +1,7 @@
 package com.openvalue.bakingrecipes.domain
 
 import org.springframework.data.neo4j.core.schema.*
-import kotlin.time.Duration
+import java.time.Duration
 
 @Node
 data class Step(

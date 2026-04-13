@@ -111,13 +111,13 @@ MERGE (s5:Step {instruction:"Take the dough out of the bag and put it on a light
 MERGE (s6:Step {instruction:"Take the dough out of the bag, put it on a lightly floured surface with the short end towards you and roll into a rectangle as before. This time, fold down one-third of the dough and then fold up the bottom third to make a neat square. This is called a single turn. Chill in the bag for another hour.", waiting_time: duration({hours:1})})
 MERGE (s7:Step {instruction:"Bring your dough out again and do a single turn as previously. Chill in the bag overnight. Your dough is now ready to use.", waiting_time: duration({hours:12})})
 MATCH (r:Recipe {name: "Puff Pastry (John Doe)"})
-CREATE (r)-[:IS_PREPARED_BY {ORDER:1}]->(s1)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:2}]->(s2)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:3}]->(s3)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:4}]->(s4)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:5}]->(s5)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:6}]->(s6)
-CREATE (r)-[:IS_PREPARED_BY {ORDER:7}]->(s7);
+CREATE (r)-[:IS_PREPARED_BY {order:1}]->(s1)
+CREATE (r)-[:IS_PREPARED_BY {order:2}]->(s2)
+CREATE (r)-[:IS_PREPARED_BY {order:3}]->(s3)
+CREATE (r)-[:IS_PREPARED_BY {order:4}]->(s4)
+CREATE (r)-[:IS_PREPARED_BY {order:5}]->(s5)
+CREATE (r)-[:IS_PREPARED_BY {order:6}]->(s6)
+CREATE (r)-[:IS_PREPARED_BY {order:7}]->(s7);
 
 
 ///
@@ -202,3 +202,58 @@ MATCH (ph:Author {name: "John Doe"})
 MATCH (r:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
 CREATE
 (ph)-[:HAS_WRITTEN {published_in: "https://www.johndoe-recipes.com/post/puff-pastry", publication_type: "WEBSITE"}]->(r);
+
+
+/// Madeleines
+CREATE (n :Recipe {name: "Madeleines"});
+CREATE (a :Author {name: "Ellen Baker", website: "https://www.ellen-bakes.com"});
+MATCH (n :Recipe {name: "Madeleines"})
+SET n.description = "Little french cakes with a vanilla flavor";
+
+MATCH (a :Author {name: "Ellen Baker"})
+MATCH (n :Recipe {name: "Madeleines"})
+MERGE (a)-[:HAS_WRITTEN]->(n);
+
+CREATE (u :Utensil {name: "Madeleine pan"});
+
+MATCH (egg :Ingredient {name: "Egg"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 2, unit: "large"}]->(egg);
+
+CREATE (sugar :Ingredient {name: "granulated sugar"});
+
+MATCH (sugar :Ingredient {name: "granulated sugar"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 1, unit: "cup"}]->(sugar);
+
+MATCH (plainFlour :Ingredient {name: "Plain flour"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 1, unit: "cup"}]->(plainFlour);
+
+MATCH (butter :Ingredient {name: "Unsalted butter"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 128, unit: "gram"}]->(plainFlour);
+
+CREATE (lemon :Ingredient {name: "Lemon zest"});
+MATCH (lemon :Ingredient {name: "Lemon zest"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon);
+
+CREATE (lemon :Ingredient {name: "Lemon juice"});
+MATCH (lemon :Ingredient {name: "Lemon juice"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon);
+
+CREATE (vannila :Ingredient {name: "Vanilla extract"});
+MATCH (vannila :Ingredient {name: "Vanilla extract"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon);
+
+MATCH (r :Recipe {name: "Madeleines"})
+CREATE (r)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt);
+
+CREATE (sugar :Ingredient {name: "Confectioners sugar"});
+
+MATCH (sugar :Ingredient {name: "Confectioners sugar"})
+MATCH (r :Recipe {name: "Madeleines"})
+MERGE (r)-[:COULD_ALSO_CONTAIN {quantity: 1, unit: "bit"}]->(sugar);

@@ -27,12 +27,6 @@ class RecipeController(private val recipeService: RecipeService, private val aut
         return ok(recipes)
     }
 
-    @GetMapping("/time-limit")
-    fun getRecipesByTimeLimit(@RequestParam maxTime: Int): ResponseEntity<List<SingleRecipe>> {
-        val recipes = recipeService.getRecipesByTimeLimit(maxTime)
-        return ok(recipes)
-    }
-
     @PostMapping
     fun createRecipe(@Valid @RequestBody recipe: CreateRecipeRequest): ResponseEntity<SingleRecipe> {
         val createdRecipe = recipeService.createRecipe(recipe)
