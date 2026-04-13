@@ -12,6 +12,8 @@ logging config:
 
 
 ## Backlog
+- [ ] Go to all buisiness requirements
+- [ ] Share repository online
 - [ x ] Fix current IngredientRepository (make it compile)
 - [ ] Create test containers test for IngredientRepository
 - [ ] Fix IngredientController ( do not expose database ids ... )

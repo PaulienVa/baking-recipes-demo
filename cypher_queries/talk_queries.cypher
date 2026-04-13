@@ -145,8 +145,8 @@ MERGE (wholegrainMustard:Ingredient {name: "Wholegrain mustard"})
 CREATE (r:Recipe {
 name: "Shallot, Onion & Chive Tart (John Doe)",
 description: "A savoury allium tart with buttery pastry, slow-cooked shallots/onions, chives and a creamy egg filling, finished until just set and golden.",
-preparationTime: 60,     // includes resting + onion cooking (active estimate)
-cookingTime: 55,         // 15 + 8 + 25..30 mins (from method) [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)
+preparationTime: duration({hours: 1}),     // includes resting + onion cooking (active estimate)
+cookingTime: duration({minutes: 55}),         // 15 + 8 + 25..30 mins (from method) [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)
 servings: 6,
 difficulty: "MEDIUM",
 category: "LUNCH"

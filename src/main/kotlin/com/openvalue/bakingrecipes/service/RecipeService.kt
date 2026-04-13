@@ -2,6 +2,7 @@ package com.openvalue.bakingrecipes.service
 
 import com.openvalue.bakingrecipes.api.domain.CreateRecipeRequest
 import com.openvalue.bakingrecipes.api.domain.IngredientOfRecipe
+import com.openvalue.bakingrecipes.api.domain.SingleRecipe
 import com.openvalue.bakingrecipes.api.domain.StepOfRecipe
 import com.openvalue.bakingrecipes.domain.Ingredient
 import com.openvalue.bakingrecipes.domain.QuantifiedIngredient
@@ -9,22 +10,23 @@ import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.domain.RecipeCategory
 import com.openvalue.bakingrecipes.domain.Step
 import com.openvalue.bakingrecipes.domain.StepInRecipe
+import com.openvalue.bakingrecipes.repository.AuthorRepository
 import com.openvalue.bakingrecipes.repository.RecipeRepository
 import org.springframework.stereotype.Service
 
 @Service
-class RecipeService(private val recipeRepository: RecipeRepository) {
+class RecipeService(private val recipeRepository: RecipeRepository, private val authorRepository: AuthorRepository) {
 
-    fun getAllRecipes(): List<Recipe> = recipeRepository.findAll()
+    fun getAllRecipes(): List<SingleRecipe> = recipeRepository.findAll().map { toSingleRecipe(it) }
 
-    fun searchRecipes(query: String): List<Recipe> =
-        recipeRepository.findByNameContainingOrDescriptionContaining(query)
+    fun searchRecipes(query: String): List<SingleRecipe> =
+        recipeRepository.findByNameContainingOrDescriptionContaining(query).map { toSingleRecipe(it) }
 
-    fun getRecipesByTimeLimit(maxTime: Int): List<Recipe> =
-        recipeRepository.findByTotalTimeLimit(maxTime)
+    fun getRecipesByTimeLimit(maxTime: Int): List<SingleRecipe> =
+        recipeRepository.findByTotalTimeLimit(maxTime).map { toSingleRecipe(it) }
 
 
-    fun createRecipe(request: CreateRecipeRequest): Recipe {
+    fun createRecipe(request: CreateRecipeRequest): SingleRecipe {
         with(request) {
             if (isInvalid()) {
                 throw IllegalArgumentException("Invalid recipe data, one of the following fields is missing: name, description, preparationTime, cookingTime, servings")
@@ -39,8 +41,14 @@ class RecipeService(private val recipeRepository: RecipeRepository) {
                 optionalIngredients = optionalIngredients,
                 steps = recipeSteps
             )
-            return recipeRepository.save(recipe)
+            val save = recipeRepository.save(recipe)
+            return SingleRecipe(name = save.name, description = save.description, author = author.name)
         }
+    }
+
+    private fun toSingleRecipe(recipe: Recipe): SingleRecipe {
+        val nameOfAuthor = authorRepository.findAuthorOfRecipe(recipe.name)
+        return SingleRecipe(name = recipe.name, description = recipe.description, author = nameOfAuthor)
     }
 
     private fun toSteps(steps: List<StepOfRecipe>) = steps.map {

@@ -14,7 +14,7 @@ data class Utenstil(
 @RelationshipProperties
 data class RecipeUtensil(
     @RelationshipId
-    val id: Long,
+    val id: Long? = null,
     val quantity: Double,
     val unit: String?,
 

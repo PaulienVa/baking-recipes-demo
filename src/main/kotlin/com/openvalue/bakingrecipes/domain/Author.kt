@@ -17,7 +17,7 @@ data class Author(
 data class HasWritten(
 
     @RelationshipId
-    val id: Long,
+    val id: Long? = null,
     val publishedIn: String,
     val publicationType: PublicationType,
 

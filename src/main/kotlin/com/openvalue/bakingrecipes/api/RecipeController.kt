@@ -1,12 +1,14 @@
 package com.openvalue.bakingrecipes.api
 
 import com.openvalue.bakingrecipes.api.domain.CreateRecipeRequest
+import com.openvalue.bakingrecipes.api.domain.SingleRecipe
 import com.openvalue.bakingrecipes.domain.Recipe
 import com.openvalue.bakingrecipes.service.AuthorService
 import com.openvalue.bakingrecipes.service.RecipeService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -14,27 +16,27 @@ import org.springframework.web.bind.annotation.*
 class RecipeController(private val recipeService: RecipeService, private val authorService: AuthorService) {
 
     @GetMapping
-    fun getAllRecipes(): ResponseEntity<List<Recipe>> {
+    fun getAllRecipes(): ResponseEntity<List<SingleRecipe>> {
         val recipes = recipeService.getAllRecipes()
-        return ResponseEntity.ok(recipes)
+        return ok(recipes)
     }
 
     @GetMapping("/search")
-    fun searchRecipes(@RequestParam query: String): ResponseEntity<List<Recipe>> {
+    fun searchRecipes(@RequestParam query: String): ResponseEntity<List<SingleRecipe>> {
         val recipes = recipeService.searchRecipes(query)
-        return ResponseEntity.ok(recipes)
+        return ok(recipes)
     }
 
     @GetMapping("/time-limit")
-    fun getRecipesByTimeLimit(@RequestParam maxTime: Int): ResponseEntity<List<Recipe>> {
+    fun getRecipesByTimeLimit(@RequestParam maxTime: Int): ResponseEntity<List<SingleRecipe>> {
         val recipes = recipeService.getRecipesByTimeLimit(maxTime)
-        return ResponseEntity.ok(recipes)
+        return ok(recipes)
     }
 
     @PostMapping
-    fun createRecipe(@Valid @RequestBody recipe: CreateRecipeRequest): ResponseEntity<Recipe> {
+    fun createRecipe(@Valid @RequestBody recipe: CreateRecipeRequest): ResponseEntity<SingleRecipe> {
         val createdRecipe = recipeService.createRecipe(recipe)
         val author = authorService.saveAuthor(recipe.author)
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipe)
+        return status(HttpStatus.CREATED).body(createdRecipe)
     }
 }

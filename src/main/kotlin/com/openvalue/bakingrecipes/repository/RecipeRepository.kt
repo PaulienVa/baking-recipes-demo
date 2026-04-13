@@ -12,7 +12,7 @@ interface RecipeRepository : Neo4jRepository<Recipe, Long> {
 
     @Query("""
         MATCH (r:Recipe)
-        WHERE r.name CONTAINS ${'$'}name OR r.description CONTAINS {{"$"}}name
+        WHERE r.name CONTAINS ${'$'}name OR r.description CONTAINS ${'$'}name
         RETURN r
     """)
     fun findByNameContainingOrDescriptionContaining(@Param("name") name: String): List<Recipe>
