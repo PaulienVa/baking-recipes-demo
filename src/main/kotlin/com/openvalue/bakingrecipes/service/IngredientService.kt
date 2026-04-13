@@ -15,7 +15,7 @@ class IngredientService(private val ingredientRepository: IngredientRepository) 
         ingredientRepository.findByNameContainingIgnoreCase(name).map { toIngredientOfRecipe(it) }
 
     fun findTheMostUsedIngredients(): List<MostUsedIngredient> =
-        ingredientRepository.findMostUsedIngredients().map { MostUsedIngredient(it.ingredientName, it.recipeCount.toInt()) }
+        ingredientRepository.findMostUsedIngredients().map { MostUsedIngredient(it.ingredient.name, it.recipeCount.toInt()) }
 
     private fun toIngredientOfRecipe(ingredient: Ingredient) = SingleIngredient(name = ingredient.name)
 }

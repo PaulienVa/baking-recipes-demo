@@ -15,7 +15,7 @@ interface IngredientRepository : Neo4jRepository<Ingredient, Long> {
 
     @Query("""
         MATCH (i:Ingredient)<-[:REQUIRES]-(r:Recipe)
-        RETURN i.name AS ingredientName, COUNT(r) AS recipeCount
+        RETURN i AS ingredient, COUNT(r) AS recipeCount
         ORDER BY recipeCount DESC
         LIMIT 10
     """)
