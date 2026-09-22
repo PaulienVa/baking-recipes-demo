@@ -1,2 +1,0 @@
-@base=localhost:8080
-GET http://{{base}}/api/ingredients
