@@ -29,7 +29,7 @@ category:        "BAKING"
 
 MATCH (ph:Author {name: "John Doe"})
 MATCH (puffPastry: Recipe {name: "Puff Pastry (John Doe)"})
-CREATE
+MERGE
 (ph)-[:HAS_WRITTEN {published_in: "https://www.paulhollywood.com/post/puff-pastry", publication_type: "WEBSITE"}]->(puffPastry);
 
 MATCH (puffPastry:Recipe {name: "Puff Pastry (John Doe)"})
@@ -38,13 +38,13 @@ MATCH (plainFlour :Ingredient {name: "Plain flour"})
 MATCH (salt :Ingredient {name: "Salt"})
 MATCH (water :Ingredient {name: "Cold water"})
 MATCH (butter :Ingredient {name: "Unsalted butter"})
-CREATE (puffPastry) -[:REQUIRES {quantity: 150, unit: "g"}]->(breadFlour)
-CREATE (puffPastry)-[:REQUIRES {quantity: 150, unit: "g"}]->(plainFlour)
-CREATE (puffPastry)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt)
-CREATE (puffPastry)-[:REQUIRES {quantity: 100, unit: "ml"}]->(water)
-CREATE (puffPastry)-[:REQUIRES {quantity: 250, unit: "g"}]->(butter);
+MERGE (puffPastry) -[:REQUIRES {quantity: 150, unit: "g"}]->(breadFlour)
+MERGE (puffPastry)-[:REQUIRES {quantity: 150, unit: "g"}]->(plainFlour)
+MERGE (puffPastry)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt)
+MERGE (puffPastry)-[:REQUIRES {quantity: 100, unit: "ml"}]->(water)
+MERGE (puffPastry)-[:REQUIRES {quantity: 250, unit: "g"}]->(butter);
 
-CREATE (puffPastry)-[:REQUIRES {quantity: 2}]->(eggs);
+MERGE (puffPastry)-[:REQUIRES {quantity: 2}]->(eggs);
 
 MERGE(s1:Step {
 instruction:    "Put the flours, salt, eggs and water into a large bowl and gently mix to an even dough with your fingers. Transfer the dough to a lightly floured surface and knead it for 5-10 minutes until smooth. The dough should feel a little tight at this stage. Shape the dough into a ball and put it into a plastic bag in the fridge to chill overnight, or for at least 7 hours",
@@ -57,13 +57,13 @@ MERGE (s5:Step {instruction:"Take the dough out of the bag and put it on a light
 MERGE (s6:Step {instruction:"Take the dough out of the bag, put it on a lightly floured surface with the short end towards you and roll into a rectangle as before. This time, fold down one-third of the dough and then fold up the bottom third to make a neat square. This is called a single turn. Chill in the bag for another hour.", waiting_time: duration({hours:1})})
 MERGE (s7:Step {instruction:"Bring your dough out again and do a single turn as previously. Chill in the bag overnight. Your dough is now ready to use.", waiting_time: duration({hours:12})})
 MATCH (puffPastry:Recipe {name: "Puff Pastry (John Doe)"})
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:1}]->(s1)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:2}]->(s2)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:3}]->(s3)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:4}]->(s4)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:5}]->(s5)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:6}]->(s6)
-CREATE (puffPastry)-[:IS_PREPARED_BY {order:7}]->(s7);
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:1}]->(s1)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:2}]->(s2)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:3}]->(s3)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:4}]->(s4)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:5}]->(s5)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:6}]->(s6)
+MERGE (puffPastry)-[:IS_PREPARED_BY {order:7}]->(s7);
 
 
 MERGE (flour:Ingredient {name: "Plain flour"})
@@ -89,21 +89,18 @@ difficulty: "MEDIUM",
 category: "LUNCH"
 })
 
-CREATE (tart)-[:REQUIRES {quantity: 225, unit: "g"}]->(flour);
-CREATE (tart)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt);
-
-CREATE (tart)-[:REQUIRES {quantity: 60, unit: "g"}]->(unsaltedButter);
-
-CREATE (tart)-[:REQUIRES {quantity: 60, unit: "g"}]->(lard);
-
-CREATE (tart)-[:REQUIRES {quantity: 8}]->(shallots);
-CREATE (tart)-[:REQUIRES {quantity: 3}]->(onions);
-CREATE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(chives);
-CREATE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(sunflowerOil);
-CREATE (tart)-[:REQUIRES {quantity: 4, unit: "medium"}]->(eggs);
-CREATE (tart)-[:REQUIRES {quantity: 2, unit: "medium"}]->(eggYolks);
-CREATE (tart)-[:REQUIRES {quantity: 200, unit: "ml"}]->(thickCream);
-CREATE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(wholegrainMustard);
+MERGE (tart)-[:REQUIRES {quantity: 225, unit: "g"}]->(flour);
+MERGE (tart)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt);
+MERGE (tart)-[:REQUIRES {quantity: 60, unit: "g"}]->(unsaltedButter);
+MERGE (tart)-[:REQUIRES {quantity: 60, unit: "g"}]->(lard);
+MERGE (tart)-[:REQUIRES {quantity: 8}]->(shallots);
+MERGE (tart)-[:REQUIRES {quantity: 3}]->(onions);
+MERGE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(chives);
+MERGE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(sunflowerOil);
+MERGE (tart)-[:REQUIRES {quantity: 4, unit: "medium"}]->(eggs);
+MERGE (tart)-[:REQUIRES {quantity: 2, unit: "medium"}]->(eggYolks);
+MERGE (tart)-[:REQUIRES {quantity: 200, unit: "ml"}]->(thickCream);
+MERGE (tart)-[:REQUIRES {quantity: 1, unit: "tbsp"}]->(wholegrainMustard);
 
 MERGE (bakingBeans:Utensil {name: "Baking beans (for blind baking)"})
 MERGE (parchment:Utensil {name: "Baking parchment"})
@@ -131,7 +128,7 @@ MERGE (tart)-[:IS_PREPARED_BY {order:8}]->(s8);
 
 MATCH (ph:Author {name: "John Doe"})
 MATCH (tart:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
-CREATE
+MERGE
 (ph)-[:HAS_WRITTEN {published_in: "https://www.johndoe-recipes.com/post/puff-pastry", publication_type: "WEBSITE"}]->(tart);
 
 CREATE (madeleines :Recipe {name: "Madeleines"});
