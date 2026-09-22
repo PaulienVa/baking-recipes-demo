@@ -9,12 +9,12 @@ CREATE CONSTRAINT unique_ingredient_name FOR (i:Ingredient) REQUIRE i.name IS UN
 
 CREATE (ph:Author {name: "John Doe", website: "https://www.johndoe-recipes.com"});
 
-CREATE (breadFlour :Ingredient {name: "Strong white bread flour"});
-CREATE (plainFlour :Ingredient {name: "Plain flour"});
-CREATE (salt :Ingredient {name: "Salt"});
-CREATE (eggs :Ingredient {name: "Egg"});
-CREATE (water :Ingredient {name: "Cold water"});
-CREATE (butter :Ingredient {name: "Unsalted butter"});
+CREATE (breadFlour :Ingredient {name: "Strong white bread flour"})
+CREATE (plainFlour :Ingredient {name: "Plain flour"})
+CREATE (salt :Ingredient {name: "Salt"})
+CREATE (eggs :Ingredient {name: "Egg"})
+CREATE (water :Ingredient {name: "Cold water"})
+CREATE (butter :Ingredient {name: "Unsalted butter"})
 
 CREATE (puffPastry:Recipe {
 name:            "Puff Pastry (John Doe)",
@@ -42,8 +42,7 @@ MERGE (puffPastry) -[:REQUIRES {quantity: 150, unit: "g"}]->(breadFlour)
 MERGE (puffPastry)-[:REQUIRES {quantity: 150, unit: "g"}]->(plainFlour)
 MERGE (puffPastry)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt)
 MERGE (puffPastry)-[:REQUIRES {quantity: 100, unit: "ml"}]->(water)
-MERGE (puffPastry)-[:REQUIRES {quantity: 250, unit: "g"}]->(butter);
-
+MERGE (puffPastry)-[:REQUIRES {quantity: 250, unit: "g"}]->(butter)
 MERGE (puffPastry)-[:REQUIRES {quantity: 2}]->(eggs);
 
 MERGE(s1:Step {
@@ -66,18 +65,18 @@ MERGE (puffPastry)-[:IS_PREPARED_BY {order:6}]->(s6)
 MERGE (puffPastry)-[:IS_PREPARED_BY {order:7}]->(s7);
 
 
-MERGE (flour:Ingredient {name: "Plain flour"})
-MERGE (salt:Ingredient {name: "Salt"})
-MERGE (unsaltedButter:Ingredient {name: "Unsalted butter"})
-MERGE (lard:Ingredient {name: "Lard"})
-MERGE (shallots:Ingredient {name: "Shallots"})
-MERGE (onions:Ingredient {name: "Onions"})
-MERGE (chives:Ingredient {name: "Chives"})
-MERGE (sunflowerOil:Ingredient {name: "Sunflower oil"})
-MERGE (eggs:Ingredient {name: "Eggs"})
-MERGE (eggYolks:Ingredient {name: "Egg yolks"})
-MERGE (thickCream:Ingredient {name: "Thick cream"})
-MERGE (wholegrainMustard:Ingredient {name: "Wholegrain mustard"})
+CREATE (flour:Ingredient {name: "Plain flour"});
+CREATE (salt:Ingredient {name: "Salt"});
+CREATE (unsaltedButter:Ingredient {name: "Unsalted butter"});
+CREATE (lard:Ingredient {name: "Lard"});
+CREATE (shallots:Ingredient {name: "Shallots"});
+CREATE (onions:Ingredient {name: "Onions"});
+CREATE (chives:Ingredient {name: "Chives"});
+CREATE (sunflowerOil:Ingredient {name: "Sunflower oil"});
+CREATE (eggs:Ingredient {name: "Eggs"});
+CREATE (eggYolks:Ingredient {name: "Egg yolks"});
+CREATE (thickCream:Ingredient {name: "Thick cream"});
+CREATE (wholegrainMustard:Ingredient {name: "Wholegrain mustard"});
 
 CREATE (tart:Recipe {
 name: "Shallot, Onion & Chive Tart (John Doe)",
@@ -109,14 +108,14 @@ MERGE (tart)-[:IS_USED_IN {quantity: 1, unit: "sheet"}]->(parchment)
 MERGE (tart)-[:IS_USED_IN {quantity: 1, unit: "set"}]->(bakingBeans);
 
 MATCH (tart:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
-CREATE (s1:Step {instruction: "Make the pastry: combine flour and salt, then rub/blitz in the cold butter (and lard) until it resembles breadcrumbs. Add a little cold water if needed to bring it together. Rest the dough (about 30 minutes)."})
-CREATE (s2:Step {instruction: "Heat oven to 200°C / gas 6. Prepare a 23cm loose-based fluted tart tin (about 3.5cm deep). [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
-CREATE (s3:Step {instruction: "Cook the shallots and onions slowly with a little oil/butter and a pinch of salt for at least 20 minutes, stirring occasionally, until very soft and golden. Cool. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
-CREATE (s4:Step {instruction: "Roll pastry to ~3mm thickness and line the tart tin, leaving excess overhanging the edge. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
-CREATE (s5:Step {instruction: "Blind bake: line with parchment, fill with baking beans, bake 15 minutes; remove beans/paper and bake ~8 minutes more until dry and lightly coloured. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
-CREATE (s6:Step {instruction: "Prepare the filling: whisk eggs (and yolks) with cream; season and mix in wholegrain mustard; stir in chopped chives."})
-CREATE (s7:Step {instruction: "Spread cooled onion mixture in the pastry case, then carefully pour in the egg mixture."})
-CREATE (s8:Step {instruction: "Bake 25–30 minutes until the filling is just set and golden. Cool slightly, then trim the overhanging pastry to finish. [[2]](https://www.sbs.com.au/food/recipe/shallot-onion-and-chive-tart/l0j1kbt6t)"})
+CREATE (s1 :Step {instruction: "Make the pastry: combine flour and salt, then rub/blitz in the cold butter (and lard) until it resembles breadcrumbs. Add a little cold water if needed to bring it together. Rest the dough (about 30 minutes)."})
+CREATE (s2 :Step {instruction: "Heat oven to 200°C / gas 6. Prepare a 23cm loose-based fluted tart tin (about 3.5cm deep). [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
+CREATE (s3 :Step {instruction: "Cook the shallots and onions slowly with a little oil/butter and a pinch of salt for at least 20 minutes, stirring occasionally, until very soft and golden. Cool. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
+CREATE (s4 :Step {instruction: "Roll pastry to ~3mm thickness and line the tart tin, leaving excess overhanging the edge. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
+CREATE (s5 :Step {instruction: "Blind bake: line with parchment, fill with baking beans, bake 15 minutes; remove beans/paper and bake ~8 minutes more until dry and lightly coloured. [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
+CREATE (s6 :Step {instruction: "Prepare the filling: whisk eggs (and yolks) with cream; season and mix in wholegrain mustard; stir in chopped chives."})
+CREATE (s7 :Step {instruction: "Spread cooled onion mixture in the pastry case, then carefully pour in the egg mixture."})
+CREATE (s8 :Step {instruction: "Bake 25–30 minutes until the filling is just set and golden. Cool slightly, then trim the overhanging pastry to finish. [[2]](https://www.sbs.com.au/food/recipe/shallot-onion-and-chive-tart/l0j1kbt6t)"})
 MERGE (tart)-[:IS_PREPARED_BY {order:1}]->(s1)
 MERGE (tart)-[:IS_PREPARED_BY {order:2}]->(s2)
 MERGE (tart)-[:IS_PREPARED_BY {order:3}]->(s3)
@@ -128,7 +127,6 @@ MERGE (tart)-[:IS_PREPARED_BY {order:8}]->(s8);
 
 MATCH (ph:Author {name: "John Doe"})
 MATCH (tart:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
-MERGE
 (ph)-[:HAS_WRITTEN {published_in: "https://www.johndoe-recipes.com/post/puff-pastry", publication_type: "WEBSITE"}]->(tart);
 
 CREATE (madeleines :Recipe {name: "Madeleines"});
