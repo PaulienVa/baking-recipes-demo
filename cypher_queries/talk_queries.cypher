@@ -111,7 +111,6 @@ MATCH  (tart:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
 MERGE (tart)-[:IS_USED_IN {quantity: 1, unit: "sheet"}]->(parchment)
 MERGE (tart)-[:IS_USED_IN {quantity: 1, unit: "set"}]->(bakingBeans);
 
-// --- Steps (based on visible method text/timings) ---
 MATCH (tart:Recipe {name: "Shallot, Onion & Chive Tart (John Doe)"})
 CREATE (s1:Step {instruction: "Make the pastry: combine flour and salt, then rub/blitz in the cold butter (and lard) until it resembles breadcrumbs. Add a little cold water if needed to bring it together. Rest the dough (about 30 minutes)."})
 CREATE (s2:Step {instruction: "Heat oven to 200°C / gas 6. Prepare a 23cm loose-based fluted tart tin (about 3.5cm deep). [[1]](https://www.paulhollywood.com/post/shallot-onion-chive-tart)"})
@@ -136,54 +135,34 @@ CREATE
 (ph)-[:HAS_WRITTEN {published_in: "https://www.johndoe-recipes.com/post/puff-pastry", publication_type: "WEBSITE"}]->(tart);
 
 CREATE (madeleines :Recipe {name: "Madeleines"});
-CREATE (a :Author {name: "Ellen Baker", website: "https://www.ellen-bakes.com"});
-MATCH (madeleines :Recipe {name: "Madeleines"})
-SET n.description = "Little french cakes with a vanilla flavor";
-
-MATCH (a :Author {name: "Ellen Baker"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (a)-[:HAS_WRITTEN]->(n);
-
-CREATE (u :Utensil {name: "Madeleine pan"});
-
-MATCH (egg :Ingredient {name: "Egg"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 2, unit: "large"}]->(egg);
-
-CREATE (granulated_sugar :Ingredient {name: "granulated sugar"});
-
-MATCH (granulated_sugar :Ingredient {name: "granulated sugar"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "cup"}]->(granulated_sugar);
-
-MATCH (plainFlour :Ingredient {name: "Plain flour"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "cup"}]->(plainFlour);
-
-MATCH (butter :Ingredient {name: "Unsalted butter"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 128, unit: "gram"}]->(butter);
-
-CREATE (lemon_zest :Ingredient {name: "Lemon zest"});
-MATCH (lemon_zest :Ingredient {name: "Lemon zest"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon_zest);
-
-CREATE (lemon_juice :Ingredient {name: "Lemon juice"});
-MATCH (lemon_juice :Ingredient {name: "Lemon juice"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon_juice);
-
-CREATE (vanila :Ingredient {name: "Vanilla extract"});
-MATCH (vanila :Ingredient {name: "Vanilla extract"})
-MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemon);
+CREATE (ellen :Author {name: "Ellen Baker", website: "https://www.ellen-bakes.com"});
 
 MATCH (madeleines :Recipe {name: "Madeleines"})
-CREATE (madeleines)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt);
+SET madeleines.description = "Little french cakes with a vanilla flavor";
 
-CREATE (conf_sugar :Ingredient {name: "Confectioners sugar"});
-
-MATCH (conf_sugar :Ingredient {name: "Confectioners sugar"})
+MATCH (ellen :Author {name: "Ellen Baker"})
 MATCH (madeleines :Recipe {name: "Madeleines"})
-MERGE (madeleines)-[:COULD_ALSO_CONTAIN {quantity: 1, unit: "bit"}]->(conf_sugar);
+MERGE (ellen)-[:HAS_WRITTEN]->(madeleines);
+
+CREATE (madeleinePan :Utensil {name: "Madeleine pan"});
+
+MERGE (egg :Ingredient {name: "Egg"});
+MERGE (granulatedSugar :Ingredient {name: "granulated sugar"});
+MERGE (plainFlour :Ingredient {name: "Plain flour"});
+MERGE (butter :Ingredient {name: "Unsalted butter"});
+MERGE (lemonZest :Ingredient {name: "Lemon zest"});
+MERGE (lemonJuice :Ingredient {name: "Lemon juice"});
+MERGE (vanilla :Ingredient {name: "Vanilla extract"});
+MERGE (salt :Ingredient {name: "Salt"});
+MERGE (confectionersSugar :Ingredient {name: "Confectioners sugar"});
+
+MATCH (madeleines :Recipe {name: "Madeleines"})
+MERGE (madeleines)-[:REQUIRES {quantity: 2, unit: "large"}]->(egg)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "cup"}]->(granulatedSugar)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "cup"}]->(plainFlour)
+MERGE (madeleines)-[:REQUIRES {quantity: 128, unit: "gram"}]->(butter)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemonZest)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(lemonJuice)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "tablespoon"}]->(vanilla)
+MERGE (madeleines)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt)
+MERGE (madeleines)-[:COULD_ALSO_CONTAIN {quantity: 1, unit: "bit"}]->(confectionersSugar);
