@@ -26,12 +26,13 @@
     difficulty:      "HARD",
     category:        "BAKING"
     });
-    MATCH (puffPastry:Recipe {name: "Puff Pastry (John Doe)"})
+    MATCH (puffPastry :Recipe {name: "Puff Pastry (John Doe)"})
     MATCH (breadFlour :Ingredient {name: "Strong white bread flour"})
     MATCH (plainFlour :Ingredient {name: "Plain flour"})
     MATCH (salt :Ingredient {name: "Salt"})
     MATCH (water :Ingredient {name: "Cold water"})
     MATCH (butter :Ingredient {name: "Unsalted butter"})
+    MATCH (eggs :Ingredient {name: "Egg"})
     MERGE (puffPastry) -[:REQUIRES {quantity: 150, unit: "g"}]->(breadFlour)
     MERGE (puffPastry)-[:REQUIRES {quantity: 150, unit: "g"}]->(plainFlour)
     MERGE (puffPastry)-[:REQUIRES {quantity: 1, unit: "pinch"}]->(salt)
